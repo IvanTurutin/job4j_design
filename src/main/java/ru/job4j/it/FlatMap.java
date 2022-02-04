@@ -11,7 +11,7 @@ public class FlatMap<T> implements Iterator<T> {
 
     public FlatMap(Iterator<Iterator<T>> data) {
         this.data = data;
-        cursor = data.next();
+        cursor = this.data.next();
     }
 
     @Override
