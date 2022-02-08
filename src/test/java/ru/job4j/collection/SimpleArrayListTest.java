@@ -92,6 +92,13 @@ public class SimpleArrayListTest {
     }
 
     @Test
+    public void whenZeroCapacityThenMustIncreaseCapacity() {
+        list = new SimpleArrayList<>(0);
+        IntStream.range(3, 10).forEach(v -> list.add(v));
+    }
+
+
+    @Test
     public void whenGetIteratorTwiceThenStartAlwaysFromBeginning() {
         Assert.assertEquals(Integer.valueOf(1), list.iterator().next());
         Assert.assertEquals(Integer.valueOf(1), list.iterator().next());

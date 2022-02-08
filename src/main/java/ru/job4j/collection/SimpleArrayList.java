@@ -13,28 +13,35 @@ public class SimpleArrayList<T> implements List<T> {
     private int modCount = 0;
 
     public SimpleArrayList(int capacity) {
+
         this.container = (T[]) new Object[capacity];
     }
 
     @Override
     public void add(T value) {
-        if (size == container.length) {
-            container = Arrays.copyOf(container, container.length * 2);
-        }
+        growth();
         container[size++] = value;
         modCount++;
     }
 
+    private void growth() {
+        if (size == container.length) {
+            container = Arrays.copyOf(container, container.length * 2 + 1);
+        }
+    }
+
     @Override
     public T set(int index, T newValue) {
-        T replaced = container[Objects.checkIndex(index, size)];
+        Objects.checkIndex(index, size);
+        T replaced = container[index];
         container[index] = newValue;
         return replaced;
     }
 
     @Override
     public T remove(int index) {
-        T removed = container[Objects.checkIndex(index, size)];
+        Objects.checkIndex(index, size);
+        T removed = container[index];
         System.arraycopy(container, index + 1, container, index, container.length - index - 1);
         container[--size] = null;
         modCount++;
@@ -43,7 +50,8 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        return container[Objects.checkIndex(index, size)];
+        Objects.checkIndex(index, size);
+        return container[index];
     }
 
     @Override
@@ -59,14 +67,15 @@ public class SimpleArrayList<T> implements List<T> {
 
             @Override
             public boolean hasNext() {
-                return index < size;
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                    return index < size;
             }
 
             @Override
             public T next() {
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException();
-                } else if (!hasNext()) {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 return container[index++];
