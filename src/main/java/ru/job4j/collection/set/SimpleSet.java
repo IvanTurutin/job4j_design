@@ -20,14 +20,15 @@ public class SimpleSet<T> implements Set<T> {
 
     @Override
     public boolean add(T value) {
-        boolean rsl = find(value);
+        boolean rsl = contains(value);
         if (!rsl) {
             set.add(value);
         }
         return !rsl;
     }
 
-    private boolean find(T value) {
+    @Override
+    public boolean contains(T value) {
         boolean rsl = false;
         for (T el : set) {
             if (Objects.equals(el, value)) {
@@ -36,11 +37,6 @@ public class SimpleSet<T> implements Set<T> {
             }
         }
         return rsl;
-    }
-
-    @Override
-    public boolean contains(T value) {
-        return find(value);
     }
 
     @Override
