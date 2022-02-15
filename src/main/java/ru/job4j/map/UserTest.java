@@ -9,7 +9,7 @@ public class UserTest {
     public static void main(String[] args) {
         Calendar birthday = new GregorianCalendar(1988, 1, 15);
         String name = "Ivan";
-        int children = 2;
+        int children = 21;
 
         System.out.println(birthday.getTime());
         User user1 = new User(name, children, birthday);
@@ -28,11 +28,9 @@ public class UserTest {
 
     }
 
-    static final int hash(User key) {
-        int h;
-
-        return (key == null) ? 0 : ((h = key.hashCode()) ^ (h >>> 16)) & 15;
-
+    static int hash(User key) {
+        int h = key.hashCode();
+        return (key == null) ? 0 : ((h) ^ (h >>> 16)) & ((1 << 4) - 1);
     }
 
 }
