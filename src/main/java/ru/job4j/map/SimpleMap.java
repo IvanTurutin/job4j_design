@@ -20,17 +20,13 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean put(K key, V value) {
         boolean rsl = false;
+        expand();
         int hash = hash(key);
         int index = indexFor(hash);
         if (table[index] == null) {
-            expand();
             table[index] = new MapEntry<K, V>(key, value);
-            table[index].hash = hash;
             modCount++;
             count++;
-            rsl = true;
-        } else if (contains(key) >= 0) {
-            table[index].value = value;
             rsl = true;
         }
         return rsl;
@@ -50,7 +46,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
             MapEntry<K, V>[] newTable = (MapEntry<K, V>[]) new MapEntry[capacity];
             for (MapEntry<K, V> entry : table) {
                 if (entry != null) {
-                    newTable[indexFor(entry.hash)] = entry;
+                    newTable[indexFor(hash(entry.key))] = entry;
                 }
             }
             table = newTable;
@@ -62,7 +58,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
         int hashKey = hash(key);
         int index = indexFor(hashKey);
         if (table[index] != null
-                && table[index].hash == hashKey
+                && hash(table[index].key) == hashKey
                 && Objects.equals(table[index].key, key)) {
             rsl = index;
         }
@@ -123,7 +119,6 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
         K key;
         V value;
-        int hash;
 
         public MapEntry(K key, V value) {
             this.key = key;

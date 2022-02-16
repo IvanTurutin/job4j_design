@@ -32,22 +32,6 @@ public class SimpleMapTest {
     }
 
     @Test
-    public void whenPutEqualKeyThenReplaceValue() {
-        Map<Integer, String> map = new SimpleMap<>();
-        map.put(1, "one");
-        Assert.assertTrue(map.put(1, "replaced one"));
-        Assert.assertEquals("replaced one", map.get(1));
-    }
-
-    @Test
-    public void whenPutNullThenReplaceNull() {
-        Map<Integer, String> map = new SimpleMap<>();
-        Assert.assertTrue(map.put(null, "null value"));
-        Assert.assertTrue(map.put(null, "replaced null"));
-        Assert.assertEquals("replaced null", map.get(null));
-    }
-
-    @Test
     public void whenRemoveNullThenTrue() {
         Map<Integer, String> map = new SimpleMap<>();
         map.put(null, "null value");
