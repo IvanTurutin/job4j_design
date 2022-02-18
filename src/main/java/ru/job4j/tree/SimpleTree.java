@@ -11,12 +11,17 @@ public class SimpleTree<E> implements Tree<E> {
 
     @Override
     public boolean add(E parent, E child) {
-        boolean rsl = false;
         Optional<Node<E>> optNode = findBy(parent);
-        if (optNode.isPresent() && findBy(child).isEmpty()) {
+        boolean rsl = optNode.isPresent() && findBy(child).isEmpty();
+        if (rsl) {
             optNode.get().children.add(new Node<>(child));
-            rsl = true;
         }
+        return rsl;
+    }
+
+    public boolean isBinary() {
+        boolean rsl = false;
+
         return rsl;
     }
 
