@@ -16,11 +16,12 @@ public class Analize {
         Map<Integer, User> map = previous.stream()
                 .collect(Collectors.toMap(User::getId, user -> user));
 
+        User userPut;
         for (User u : current) {
-            User us = map.put(u.getId(), u);
-            if (us == null) {
+            userPut = map.put(u.getId(), u);
+            if (userPut == null) {
                 add++;
-            } else if (!us.equals(u)) {
+            } else if (!userPut.equals(u)) {
                 change++;
             } else {
                 equal++;
