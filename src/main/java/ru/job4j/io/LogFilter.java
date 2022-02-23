@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 public class LogFilter {
     public List<String> filter(String file) {
-        String[] strings;
         List<String> list = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
             list = in.lines()
