@@ -22,7 +22,9 @@ public class EvenNumberFile {
         for (String s : strings) {
             num = Integer.parseInt(s);
             if (num % 2 == 0) {
-                System.out.println(num);
+                System.out.println("The number " + num + " is even.");
+            } else {
+                System.out.println("The number " + num + " isn't even.");
             }
         }
     }
