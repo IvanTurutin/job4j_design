@@ -58,5 +58,4 @@ public class Config {
         Map<String, String> map = config.getValues();
         map.entrySet().stream().forEach(System.out::println);
     }
-
 }
