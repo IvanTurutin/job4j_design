@@ -37,6 +37,15 @@ public class ConfigTest {
         assertThat(config.getValues().size(), is(5));
     }
 
+    @Test
+    public void whenTwoEqualSign() {
+        String path = "./data/pair_with_two_equal_sign.properties";
+        Config config = new Config(path);
+        config.load();
+        Map<String, String> map = config.getValues();
+        assertThat(config.value("name"), is("Ivan=Turutin"));
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void whenKeyIsAbsent() {
         String path = "./data/key_is_absent.properties";
