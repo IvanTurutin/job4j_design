@@ -84,4 +84,5 @@ public class AnalizyTest {
         File file = new File(trgPath);
         assertFalse(file.exists());
     }
+
 }
