@@ -14,7 +14,6 @@ public class Search {
         if (args.length != 2) {
             throw new IllegalArgumentException("Arguments entered incompletely. Usage java -jar Search.jar ROOT_FOLDER FILE_EXTENSION.");
         }
-
         Path start;
         try {
             start = Paths.get(args[0]);
