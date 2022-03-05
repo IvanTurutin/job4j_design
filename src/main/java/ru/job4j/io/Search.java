@@ -11,16 +11,7 @@ import java.util.function.Predicate;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        if (args.length != 2) {
-            throw new IllegalArgumentException("Arguments entered incompletely. Usage java -jar Search.jar ROOT_FOLDER FILE_EXTENSION.");
-        }
-        Path start;
-        try {
-            start = Paths.get(args[0]);
-        } catch (InvalidPathException e) {
-            throw new IllegalArgumentException("First argument must be Path format. For example c:/projects");
-        }
-
+        Path start = validate(args);
         String extension = args[1];
         search(start, p -> p.toFile().getName().endsWith(extension)).forEach(System.out::println);
     }
@@ -29,5 +20,26 @@ public class Search {
         SearchFiles searcher = new SearchFiles(condition);
         Files.walkFileTree(root, searcher);
         return searcher.getPaths();
+    }
+
+    private static Path validate(String[] args) {
+        if (args.length != 2) {
+            throw new IllegalArgumentException(
+                    "Arguments entered incompletely. Usage java -jar Search.jar ROOT_FOLDER FILE_EXTENSION."
+            );
+        }
+        Path start;
+        try {
+            start = Paths.get(args[0]);
+        } catch (InvalidPathException e) {
+            throw new IllegalArgumentException("First argument must be Path format. For example c:/projects");
+        }
+        if (!start.toFile().exists()) {
+            throw new IllegalArgumentException("Arguments entered incompletely. ROOT_FOLDER not found.");
+        }
+        if (start.toFile().isFile()) {
+            throw new IllegalArgumentException("Arguments entered incompletely. ROOT_FOLDER is file");
+        }
+        return start;
     }
 }
