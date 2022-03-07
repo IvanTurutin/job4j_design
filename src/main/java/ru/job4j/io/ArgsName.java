@@ -10,7 +10,7 @@ public class ArgsName {
     public String get(String key) {
         String value = values.get(key);
         if (value == null) {
-            throw new IllegalArgumentException("Incorrect arguments entered.");
+            throw new IllegalArgumentException("There is no such parameter.");
         }
         return value;
     }
