@@ -22,7 +22,7 @@ public class Search {
         return searcher.getPaths();
     }
 
-    private static Path validate(String[] args) {
+    public static Path validate(String[] args) {
         if (args.length != 2) {
             throw new IllegalArgumentException(
                     "Arguments entered incompletely. Usage java -jar Search.jar ROOT_FOLDER FILE_EXTENSION."
