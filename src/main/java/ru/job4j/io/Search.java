@@ -34,11 +34,16 @@ public class Search {
         } catch (InvalidPathException e) {
             throw new IllegalArgumentException("First argument must be Path format. For example c:/projects");
         }
+        if (args[1].charAt(0) != '.') {
+            throw new IllegalArgumentException(
+                    "Entered arguments are incorrect. FILE_EXTENSION should start with \".\""
+            );
+        }
         if (!start.toFile().exists()) {
-            throw new IllegalArgumentException("Arguments entered incompletely. ROOT_FOLDER not found.");
+            throw new IllegalArgumentException("Entered arguments are incorrect. ROOT_FOLDER not found.");
         }
         if (start.toFile().isFile()) {
-            throw new IllegalArgumentException("Arguments entered incompletely. ROOT_FOLDER is file");
+            throw new IllegalArgumentException("Entered arguments are incorrect. ROOT_FOLDER is a file");
         }
         return start;
     }
