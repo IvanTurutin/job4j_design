@@ -46,4 +46,12 @@ public class ArgsNameTest {
         ArgsName jvm = ArgsName.of(new String[] {"-enconding=UTF-8", "="});
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void whenGetNotExistKey() {
+
+        ArgsName jvm = ArgsName.of(new String[] {"-Xmx=512"});
+
+        jvm.get("encoding");
+
+    }
 }

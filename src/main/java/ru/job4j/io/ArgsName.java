@@ -8,7 +8,11 @@ public class ArgsName {
     private final Map<String, String> values = new HashMap<>();
 
     public String get(String key) {
-        return values.get(key);
+        String value = values.get(key);
+        if (value == null) {
+            throw new IllegalArgumentException("Incorrect arguments entered.");
+        }
+        return value;
     }
 
     private void parse(String[] args) {
