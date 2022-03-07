@@ -88,5 +88,6 @@ public class ConsoleChat {
     public static void main(String[] args) {
         ConsoleChat cc = new ConsoleChat("logChat.txt", "Answers.txt");
         cc.run();
+
     }
 }
