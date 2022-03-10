@@ -12,7 +12,6 @@ public class CSVReader {
 
     public static void main(String[] args) throws Exception {
         CSVReader.handle(ArgsName.of(args));
-        //-path=D:\t\file.csv -delimiter=";"  -out=stdout -filter=name,age
     }
 
     public static void handle(ArgsName argsName) throws Exception {

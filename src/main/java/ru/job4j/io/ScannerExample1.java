@@ -11,7 +11,6 @@ public class ScannerExample1 {
                 "4 5 6",
                 "7 8 9"
         );
-        //System.out.println(data);
         var scanner = new Scanner(new CharArrayReader(data.toCharArray()));
         while (scanner.hasNextInt()) {
             System.out.print(scanner.nextInt());
