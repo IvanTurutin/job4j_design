@@ -17,14 +17,14 @@ public class CSVReader {
     public static void handle(ArgsName argsName) throws Exception {
         File path = CSVReader.validatePath(argsName.get("path"));
         String delimiter = argsName.get("delimiter");
-        String out = argsName.get("out");
+        File out = validateOut(argsName.get("out"));
         String[] filters = argsName.get("filter").split(",");
 
         List<String[]> tableData = readTable(path, delimiter);
 
         List<String> rslTable = getResultTable(tableData, filters);
 
-        if ("stdout".equals(out)) {
+        if ("stdout".equals(out.toString())) {
             consoleOut(rslTable);
         } else {
             fileOut(rslTable, out);
@@ -35,14 +35,9 @@ public class CSVReader {
         rslTable.forEach(System.out::println);
     }
 
-    private static void fileOut(List<String> rslTable, String out) {
-        File file;
-        try {
-            file = new File(out);
-        } catch (InvalidPathException e) {
-            throw new IllegalArgumentException("OUT argument must be File format. For example out.txt");
-        }
-        try (PrintWriter pw = new PrintWriter(new FileWriter(file, Charset.forName("WINDOWS-1251"), true))) {
+    private static void fileOut(List<String> rslTable, File out) {
+
+        try (PrintWriter pw = new PrintWriter(new FileWriter(out, Charset.forName("WINDOWS-1251"), true))) {
             rslTable.forEach(pw::println);
         } catch (IOException e) {
             e.printStackTrace();
@@ -108,4 +103,13 @@ public class CSVReader {
         return file;
     }
 
+    private static File validateOut(String out) {
+        File file;
+        try {
+            file = new File(out);
+        } catch (InvalidPathException e) {
+            throw new IllegalArgumentException("OUT argument must be File format. For example out.txt");
+        }
+        return file;
+    }
 }
