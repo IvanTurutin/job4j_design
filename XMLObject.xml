@@ -1,0 +1,14 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<xmlobject>
+    <bl>true</bl>
+    <i>5</i>
+    <string>five</string>
+    <contact>
+        <zipcode>123456</zipcode>
+        <phone>11-22-33</phone>
+    </contact>
+    <arrays>
+        <array>1</array>
+        <array>2</array>
+    </arrays>
+</xmlobject>
