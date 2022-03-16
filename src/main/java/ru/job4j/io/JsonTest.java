@@ -6,15 +6,27 @@ import com.google.gson.GsonBuilder;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.annotation.*;
+import java.io.StringWriter;
 
-public class JsonTest implements Serializable {
+@XmlRootElement(name = "jsontest")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class JsonTest {
     private boolean bl;
     private int i;
     private String string;
-    private Contact contact;
+    private Contact2 contact;
+    @XmlElementWrapper(name = "arrays")
+    @XmlElement(name = "array")
     private int[] arr;
 
-    public JsonTest(boolean bl, int i, String string, Contact contact, int[] arr) {
+    public JsonTest() {
+    }
+
+    public JsonTest(boolean bl, int i, String string, Contact2 contact, int[] arr) {
         this.bl = bl;
         this.i = i;
         this.string = string;
@@ -34,7 +46,7 @@ public class JsonTest implements Serializable {
         return string;
     }
 
-    public Contact getContact() {
+    public Contact2 getContact() {
         return contact;
     }
 
@@ -55,7 +67,7 @@ public class JsonTest implements Serializable {
 
     public static void main(String[] args) {
         JsonTest jsonTest = new JsonTest(
-                true, 5, "five", new Contact(123456, "11-22-33"), new int[]{1, 2}
+                true, 5, "five", new Contact2(123456, "11-22-33"), new int[]{1, 2}
         );
         final Gson gson = new GsonBuilder().create();
         System.out.println(gson.toJson(jsonTest));
