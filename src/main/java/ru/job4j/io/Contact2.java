@@ -1,5 +1,8 @@
 package ru.job4j.io;
 
+import org.json.JSONObject;
+import org.json.JSONPropertyIgnore;
+
 import java.io.*;
 import java.nio.file.Files;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,6 +17,8 @@ public class Contact2 {
     private int zipCode;
 
     private String phone;
+
+    private JsonTest jsonTest;
 
     public Contact2() {
     }
@@ -31,6 +36,15 @@ public class Contact2 {
         return phone;
     }
 
+    @JSONPropertyIgnore
+    public JsonTest getJsonTest() {
+        return jsonTest;
+    }
+
+    public void setJsonTest(JsonTest jsonTest) {
+        this.jsonTest = jsonTest;
+    }
+
     @Override
     public String toString() {
         return "Contact{"
@@ -39,23 +53,11 @@ public class Contact2 {
                 + '}';
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        final Contact2 contact = new Contact2(123456, "+7 (111) 111-11-11");
+    public static void main(String[] args) {
+        Contact2 contact2 = new Contact2(123456, "11-22-33");
+        JsonTest jsonTest = new JsonTest(false, 30, "five", contact2, new int[]{1, 2});
+        contact2.setJsonTest(jsonTest);
 
-        /* Запись объекта во временный файл, который удалится системой */
-        File tempFile = Files.createTempFile(null, null).toFile();
-        try (FileOutputStream fos = new FileOutputStream(tempFile);
-             ObjectOutputStream oos =
-                     new ObjectOutputStream(fos)) {
-            oos.writeObject(contact);
-        }
-
-        /* Чтение объекта из файла */
-        try (FileInputStream fis = new FileInputStream(tempFile);
-             ObjectInputStream ois =
-                     new ObjectInputStream(fis)) {
-            final Contact2 contactFromFile = (Contact2) ois.readObject();
-            System.out.println(contactFromFile);
-        }
+        System.out.println(new JSONObject(jsonTest).toString());
     }
 }

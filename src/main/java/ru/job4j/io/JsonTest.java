@@ -3,6 +3,7 @@ package ru.job4j.io;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.json.JSONPropertyIgnore;
 
 import java.io.Serializable;
 import java.util.Arrays;
