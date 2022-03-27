@@ -10,6 +10,7 @@ create table color(
 
 create table cars(
 	id serial primary key,
+	vin_numb varchar(255),
 	color_id int references color(id) unique,
 	power_id int references car_power(id) unique
 );
