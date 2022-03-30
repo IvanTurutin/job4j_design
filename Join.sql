@@ -46,6 +46,7 @@ on cr.color_id = cl.id
 join car_power as cp
 on cr.power_id = cp.id;
 
+
 DROP TABLE cars CASCADE;
 DROP TABLE color;
 DROP TABLE car_power;
