@@ -39,7 +39,7 @@ on cr.color_id = cl.id
 join car_power as cp
 on cr.power_id = cp.id;
 
-select cr.model, cl.color, cp.car_power
+select cr.model as Модель, cl.color as Цвет, cp.car_power as Мощность
 from cars as cr
 join color as cl
 on cr.color_id = cl.id
