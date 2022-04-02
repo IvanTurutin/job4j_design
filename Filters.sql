@@ -16,6 +16,8 @@ insert into product(type_id, name,  price, expired_date) values (1, 'Росси�
 insert into product(type_id, name, price, expired_date) values (1, 'Мааcдам', 500, '2022-03-20');
 insert into product(type_id, name, price, expired_date) values (2, 'мороженое', 600, '2022-04-20');
 insert into product(type_id, name, price, expired_date) values (3, 'деревенское', 100, '2022-04-15');
+insert into product(type_id, name, price, expired_date) values (1, 'Гауда', 600, '2022-04-10');
+
 
 SELECT t.name as Тип, p.name as Наименование, p.price as Цена,  p.expired_date as Срок_годности
 FROM product as p
@@ -40,10 +42,14 @@ join type as t
 on p.type_id = t.id
 WHERE p.expired_date < CURRENT_DATE;
 
-SELECT MAX(p.price) as Max_Цена
+SELECT t.name as Тип, p.name as Наименование, p.price as Цена
 FROM product as p
 join type as t
-on p.type_id = t.id;
+on p.type_id = t.id
+where p.price = (
+	select MAX(p.price)
+	from product as p
+);
 
 SELECT t.name, COUNT(*)
 FROM product as p
