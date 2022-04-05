@@ -37,6 +37,11 @@ public class Config {
         return values;
     }
 
+    public Map<String, String> loadAndGetValues() {
+        load();
+        return values;
+    }
+
     public String value(String key) {
         return values.get(key);
     }
