@@ -2,6 +2,8 @@ package ru.job4j.jdbc;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 import java.util.StringJoiner;
@@ -129,22 +131,23 @@ public class TableEditor implements AutoCloseable {
 
     public static void main(String[] args) throws Exception {
         Properties properties = new Properties();
-        properties.load(new BufferedReader(new FileReader("app.properties")));
-
-        try (TableEditor tableEditor = new TableEditor(properties)) {
-            tableEditor.createTable("test_table");
-            System.out.println(TableEditor.getTableScheme(tableEditor.getConnection(), "test_table"));
-            tableEditor.addColumn("test_table", "id", "serial primary key");
-            System.out.println(TableEditor.getTableScheme(tableEditor.getConnection(), "test_table"));
-            tableEditor.addColumn("test_table", "name", "varchar(255)");
-            System.out.println(TableEditor.getTableScheme(tableEditor.getConnection(), "test_table"));
-            tableEditor.addColumn("test_table", "age", "integer");
-            System.out.println(TableEditor.getTableScheme(tableEditor.getConnection(), "test_table"));
-            tableEditor.renameColumn("test_table", "age", "age2");
-            System.out.println(TableEditor.getTableScheme(tableEditor.getConnection(), "test_table"));
-            tableEditor.dropColumn("test_table", "age2");
-            System.out.println(TableEditor.getTableScheme(tableEditor.getConnection(), "test_table"));
-            tableEditor.dropTable("test_table");
+        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
+            properties.load(in);
+            try (TableEditor tableEditor = new TableEditor(properties)) {
+                tableEditor.createTable("test_table");
+                System.out.println(TableEditor.getTableScheme(tableEditor.getConnection(), "test_table"));
+                tableEditor.addColumn("test_table", "id", "serial primary key");
+                System.out.println(TableEditor.getTableScheme(tableEditor.getConnection(), "test_table"));
+                tableEditor.addColumn("test_table", "name", "varchar(255)");
+                System.out.println(TableEditor.getTableScheme(tableEditor.getConnection(), "test_table"));
+                tableEditor.addColumn("test_table", "age", "integer");
+                System.out.println(TableEditor.getTableScheme(tableEditor.getConnection(), "test_table"));
+                tableEditor.renameColumn("test_table", "age", "age2");
+                System.out.println(TableEditor.getTableScheme(tableEditor.getConnection(), "test_table"));
+                tableEditor.dropColumn("test_table", "age2");
+                System.out.println(TableEditor.getTableScheme(tableEditor.getConnection(), "test_table"));
+                tableEditor.dropTable("test_table");
+            }
         }
     }
 }
