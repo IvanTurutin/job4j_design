@@ -27,9 +27,8 @@ public class ImportDB {
                     .forEach(s -> {
                         if (s.length != 2 || s[0].isBlank() || s[1].isBlank()) {
                             throw new IllegalArgumentException();
-                        } else {
-                            users.add(new ImportDB.User(s[0], s[1]));
                         }
+                        users.add(new ImportDB.User(s[0], s[1]));
                     });
         } catch (IllegalArgumentException iae) {
             System.out.println("Check input file for correct data.");
