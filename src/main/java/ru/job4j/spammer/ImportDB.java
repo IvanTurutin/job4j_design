@@ -24,7 +24,15 @@ public class ImportDB {
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines()
                     .map(l -> l.split(";"))
-                    .forEach(s -> users.add(new ImportDB.User(s[0], s[1])));
+                    .forEach(s -> {
+                        if (s.length != 2 || s[0].isBlank() || s[1].isBlank()) {
+                            throw new IllegalArgumentException();
+                        } else {
+                            users.add(new ImportDB.User(s[0], s[1]));
+                        }
+                    });
+        } catch (IllegalArgumentException iae) {
+            System.out.println("Check input file for correct data.");
         }
         return users;
     }
@@ -69,6 +77,9 @@ public class ImportDB {
      *
      * Выборка таблицы пользователей
      * select * from users;
+     *
+     * Очистка таблицы
+     * DELETE FROM users;
      */
 
     public static void main(String[] args) throws Exception {
