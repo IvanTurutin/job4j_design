@@ -19,7 +19,7 @@ public class ImportDB {
         this.dump = dump;
     }
 
-    public List<User> load() throws IOException {
+    public List<User> load() {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines()
@@ -30,8 +30,8 @@ public class ImportDB {
                         }
                         users.add(new ImportDB.User(s[0], s[1]));
                     });
-        } catch (IllegalArgumentException iae) {
-            System.out.println("Check input file for correct data.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return users;
     }
@@ -81,7 +81,7 @@ public class ImportDB {
      * DELETE FROM users;
      */
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
         Properties cfg = new Properties();
         try (InputStream in = ImportDB.class.getClassLoader().getResourceAsStream("spammer.properties")) {
             cfg.load(in);
