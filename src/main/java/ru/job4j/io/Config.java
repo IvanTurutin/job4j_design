@@ -39,7 +39,7 @@ public class Config {
 
     public Map<String, String> loadAndGetValues() {
         load();
-        return values;
+        return getValues();
     }
 
     public String value(String key) {
